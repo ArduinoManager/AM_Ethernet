@@ -175,6 +175,7 @@ class AMController {
     void logLn(unsigned long msg);
 
     void temporaryDigitalWrite(uint8_t pin, uint8_t value, unsigned long ms);
+    float to_voltage(float adc_value, float vref, uint8_t resolution = 10);
 
     void setNTPServerAddress(IPAddress address);
 

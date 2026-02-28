@@ -154,7 +154,7 @@ void AMController::loop(unsigned long _delay) {
         // Manages Alarm creation and update requests
 
         char id[8];
-        unsigned long time;
+        unsigned long time = 0;
 
         if (strlen(_value) > 0 && strcmp(_variable, "$AlarmId$") == 0) {
           strcpy(id, _value);
@@ -465,6 +465,10 @@ void AMController::temporaryDigitalWrite(uint8_t pin, uint8_t value, unsigned lo
   digitalWrite(pin, previousValue);
 }
 
+float AMController::to_voltage(float adc_value, float vref, uint8_t resolution) {
+  const float conversion_factor = vref / (1 << resolution);
+  return adc_value * conversion_factor;
+}
 
 // Time Management
 
