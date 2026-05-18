@@ -373,9 +373,7 @@ void AMController::writeMessage(const char *variable, int value) {
   char buffer[VARIABLELEN + VALUELEN + 3];
   char vbuffer[VALUELEN];
 
-  dtostrf(value, 0, 0, vbuffer);
-  snprintf(buffer, VARIABLELEN + VALUELEN + 3, "%s=%s#", variable, vbuffer);
-
+  snprintf(buffer, 128, "%s=%.5f#", variable, value);
   _client.write((const uint8_t *)buffer, strlen(buffer)*sizeof(char));
 }
 
@@ -466,7 +464,7 @@ void AMController::temporaryDigitalWrite(uint8_t pin, uint8_t value, unsigned lo
 }
 
 float AMController::to_voltage(float adc_value, float vref, uint8_t resolution) {
-  const float conversion_factor = vref / (1 << resolution);
+  const float conversion_factor = vref / ((1 << resolution) - 1);
   return adc_value * conversion_factor;
 }
 
